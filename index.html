@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ClassList.exe</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+font-family:'Share Tech Mono',monospace;
+background:black;
+overflow:hidden;
+color:white;
+}
+
+/* MATRIX BACKGROUND */
+
+#matrix{
+position:fixed;
+top:0;
+left:0;
+z-index:-3;
+}
+
+/* Y2K CHROME LIGHT */
+
+.chrome-light{
+position:fixed;
+width:600px;
+height:600px;
+background:radial-gradient(circle,#00ffe0,#8a2be2,transparent);
+filter:blur(120px);
+opacity:0.4;
+z-index:-2;
+}
+
+/* CURSOR TRAIL */
+
+.trail{
+position:fixed;
+width:6px;
+height:6px;
+background:#00ffe0;
+border-radius:50%;
+pointer-events:none;
+box-shadow:0 0 10px #00ffe0;
+}
+
+/* DESKTOP ICONS */
+
+.desktop{
+position:fixed;
+top:20px;
+left:20px;
+z-index:5;
+}
+
+.icon{
+width:70px;
+text-align:center;
+margin-bottom:20px;
+cursor:grab;
+font-family:Tahoma;
+font-size:12px;
+}
+
+.icon img{
+width:40px;
+display:block;
+margin:auto;
+}
+
+/* XP WINDOW */
+
+.xp-window{
+width:420px;
+margin:auto;
+margin-top:120px;
+border:3px solid #245edb;
+border-radius:8px;
+overflow:hidden;
+box-shadow:0 0 40px #00ffe0;
+}
+
+/* TITLEBAR */
+
+.xp-titlebar{
+background:linear-gradient(#3a8cff,#245edb);
+color:white;
+padding:6px 10px;
+font-family:Tahoma;
+display:flex;
+justify-content:space-between;
+}
+
+.xp-buttons span{
+background:#e0e0e0;
+color:black;
+padding:2px 8px;
+margin-left:5px;
+}
+
+/* IE TOOLBAR */
+
+.ie-toolbar{
+background:#d6d6d6;
+padding:5px;
+border-bottom:1px solid #888;
+font-family:Tahoma;
+font-size:12px;
+}
+
+.ie-toolbar button{
+background:#efefef;
+border:1px solid #888;
+padding:3px 6px;
+margin-right:4px;
+}
+
+/* METALLIC PANEL */
+
+.container{
+padding:30px;
+background:linear-gradient(145deg,#ffffff,#bfbfbf,#e6e6e6);
+text-align:center;
+color:black;
+}
+
+/* INPUTS */
+
+input{
+width:80%;
+padding:10px;
+margin:6px;
+border-radius:6px;
+border:1px solid #555;
+}
+
+/* XP BUTTON */
+
+button{
+padding:10px 18px;
+margin:10px;
+background:linear-gradient(#4fa3ff,#1b6dd1);
+border:1px solid #083b87;
+color:white;
+font-weight:bold;
+border-radius:4px;
+cursor:pointer;
+}
+
+button:hover{
+background:linear-gradient(#66b4ff,#2b80e6);
+}
+
+/* CD LOADER */
+
+.cd-loader{
+width:70px;
+height:70px;
+border-radius:50%;
+margin:10px auto;
+background:conic-gradient(#00ffe0,#8a2be2,#00ffe0);
+border:4px solid #444;
+animation:spinCD 2s linear infinite;
+display:none;
+}
+
+@keyframes spinCD{
+0%{transform:rotate(0deg)}
+100%{transform:rotate(360deg)}
+}
+
+/* STUDENT LIST */
+
+.student{
+padding:4px;
+border-bottom:1px solid #aaa;
+}
+
+/* TASKBAR */
+
+.taskbar{
+position:fixed;
+bottom:0;
+width:100%;
+height:40px;
+background:linear-gradient(#245edb,#1b4ea3);
+display:flex;
+align-items:center;
+padding:0 10px;
+font-family:Tahoma;
+}
+
+.start{
+background:linear-gradient(#3cff3c,#2aa52a);
+padding:6px 14px;
+border-radius:4px;
+color:white;
+font-weight:bold;
+margin-right:10px;
+cursor:pointer;
+}
+
+.clock{
+margin-left:auto;
+color:white;
+}
+
+/* MSN POPUP */
+
+.msn{
+position:fixed;
+bottom:50px;
+right:20px;
+width:200px;
+background:white;
+border:1px solid #888;
+font-family:Tahoma;
+font-size:12px;
+padding:10px;
+display:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div class="chrome-light" style="top:100px;left:200px;"></div>
+<div class="chrome-light" style="top:300px;left:900px;"></div>
+
+<div class="desktop">
+
+<div class="icon">
+<img src="https://cdn-icons-png.flaticon.com/512/716/716784.png">
+My Computer
+</div>
+
+<div class="icon">
+<img src="https://cdn-icons-png.flaticon.com/512/716/716787.png">
+Documents
+</div>
+
+<div class="icon">
+<img src="https://cdn-icons-png.flaticon.com/512/716/716784.png">
+Recycle Bin
+</div>
+
+</div>
+
+<div class="xp-window">
+
+<div class="xp-titlebar">
+ClassList.exe
+<div class="xp-buttons">
+<span>_</span>
+<span>□</span>
+<span>X</span>
+</div>
+</div>
+
+<div class="ie-toolbar">
+<button>Back</button>
+<button>Forward</button>
+<button>Refresh</button>
+<button>Home</button>
+</div>
+
+<div class="container">
+
+<h2>Student List</h2>
+
+<input id="name1" placeholder="student_1">
+<input id="name2" placeholder="student_2">
+<input id="name3" placeholder="student_3">
+<input id="name4" placeholder="student_4">
+
+<br>
+
+<button onclick="submitNames()">SUBMIT</button>
+<button onclick="sortNames()">SORT</button>
+
+<div class="cd-loader" id="cd"></div>
+
+<div id="display"></div>
+
+</div>
+</div>
+
+<div class="taskbar">
+<div class="start">Start</div>
+<div class="clock" id="clock"></div>
+</div>
+
+<div class="msn" id="msn">
+💬 New message: Welcome to ClassList.exe
+</div>
+
+<script>
+
+/* STUDENT LIST */
+
+let students=[]
+
+function submitNames(){
+
+beep()
+
+document.getElementById("cd").style.display="block"
+
+setTimeout(()=>{
+
+students=[]
+
+for(let i=1;i<=4;i++){
+
+let name=document.getElementById("name"+i).value
+if(name!="") students.push(name)
+
+}
+
+showList()
+
+document.getElementById("cd").style.display="none"
+
+},1000)
+
+}
+
+function sortNames(){
+students.sort()
+showList()
+}
+
+function showList(){
+
+let html=""
+
+for(let i=0;i<students.length;i++){
+
+html+=`<div class="student">★ ${i+1}. ${students[i]}</div>`
+
+}
+
+document.getElementById("display").innerHTML=html
+
+}
+
+/* SOUND */
+
+function beep(){
+let audio=new Audio("https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg")
+audio.play()
+}
+
+/* CLOCK */
+
+setInterval(function(){
+
+let d=new Date()
+document.getElementById("clock").innerText=d.toLocaleTimeString()
+
+},1000)
+
+/* MSN POPUP */
+
+setTimeout(function(){
+document.getElementById("msn").style.display="block"
+},4000)
+
+/* MATRIX RAIN */
+
+const canvas=document.getElementById("matrix")
+const ctx=canvas.getContext("2d")
+
+canvas.height=window.innerHeight
+canvas.width=window.innerWidth
+
+const letters="01アイウエオカキクケコ"
+const matrix=letters.split("")
+
+const fontSize=14
+const columns=canvas.width/fontSize
+const drops=[]
+
+for(let x=0;x<columns;x++) drops[x]=1
+
+function draw(){
+
+ctx.fillStyle="rgba(0,0,0,0.05)"
+ctx.fillRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="#00ffe0"
+ctx.font=fontSize+"px monospace"
+
+for(let i=0;i<drops.length;i++){
+
+const text=matrix[Math.floor(Math.random()*matrix.length)]
+
+ctx.fillText(text,i*fontSize,drops[i]*fontSize)
+
+if(drops[i]*fontSize>canvas.height && Math.random()>0.975)
+drops[i]=0
+
+drops[i]++
+
+}
+
+}
+
+setInterval(draw,33)
+
+/* CURSOR TRAIL */
+
+document.addEventListener("mousemove",function(e){
+
+let dot=document.createElement("div")
+dot.className="trail"
+dot.style.left=e.pageX+"px"
+dot.style.top=e.pageY+"px"
+
+document.body.appendChild(dot)
+
+setTimeout(()=>{dot.remove()},400)
+
+})
+
+</script>
+
+</body>
+</html>
